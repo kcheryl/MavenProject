@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ClientTest {
+	String gameNameInvalid = "Invalid game name!";
+	String playerNameInvalid = "Invalid player name!";
+	String dayNameInvalid = "Invalid day name!";
 
 	@Test
 	public void addGame() {
@@ -15,21 +18,21 @@ public class ClientTest {
 	@Test
 	public void addGameNoName() {
 		String response = Client.addGame("", 2);
-		String expected = "Invalid game name!";
+		String expected = gameNameInvalid;
 		assertEquals(expected, response);
 	}
 
 	@Test
 	public void addGameNoPlayer() {
-		String response = Client.addGame("Tennis", 0);
+		String response = Client.addGame("Tennis1", 0);
 		String expected = "Invalid number of players!";
 		assertEquals(expected, response);
 	}
 
 	@Test
 	public void addGameDuplicate() {
-		Client.addGame("Basketball", 2);
-		String response = Client.addGame("Basketball", 2);
+		Client.addGame("Basketball1", 2);
+		String response = Client.addGame("Basketball1", 2);
 		String expected = "Game is already created!";
 		assertEquals(expected, response);
 	}
@@ -37,7 +40,7 @@ public class ClientTest {
 	@Test
 	public void addGameNullName() {
 		String response = Client.addGame(null, 5);
-		String expected = "Invalid game name!";
+		String expected = gameNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -91,7 +94,7 @@ public class ClientTest {
 		Client.addGame("Tennis", 2);
 		Game[] gameArr = { game1, game2 };
 		String response = Client.addPlayer("", gameArr);
-		String expected = "Invalid player name!";
+		String expected = playerNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -122,7 +125,7 @@ public class ClientTest {
 
 		Game[] gameArr = { game1, game2 };
 		String response = Client.addPlayer(null, gameArr);
-		String expected = "Invalid player name!";
+		String expected = playerNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -166,7 +169,7 @@ public class ClientTest {
 		game1.setNumPlayer(2);
 		Game[] gameArr = { game1 };
 		String response = Client.addDay("", gameArr);
-		String expected = "Invalid day name!";
+		String expected = dayNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -198,17 +201,19 @@ public class ClientTest {
 
 		Game[] gameArr = { game1, game2 };
 		String response = Client.addDay(null, gameArr);
-		String expected = "Invalid day name!";
+		String expected = dayNameInvalid;
 		assertEquals(expected, response);
 	}
 
 	@Test
 	public void getGameReport() {
-		Client.addGame("Tennis5", 6);
+		String gameName1 = "Tennis5";
+
+		Client.addGame(gameName1, 6);
 		Client.addGame("Swimming5", 2);
 
 		Game game1 = new Game();
-		game1.setName("Tennis5");
+		game1.setName(gameName1);
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
 		game2.setName("Swimming5");
@@ -218,7 +223,7 @@ public class ClientTest {
 		Client.addDay("Day5", gameArr);
 		Client.addPlayer("Tom", gameArr);
 		Client.addPlayer("Mary", gameArr);
-		String response = Client.generateGameWiseReport("Tennis5").toString();
+		String response = Client.generateGameWiseReport(gameName1).toString();
 		String expected = "Game Wise Report for Tennis5\nDays: Day5 \nPlayers: Tom Mary ";
 		assertEquals(expected, response);
 	}
@@ -246,14 +251,14 @@ public class ClientTest {
 
 	@Test
 	public void getGameReportEmptyGame() {
-		Client.addGame("Tennis6", 6);
-		Client.addGame("Swimming6", 2);
+		Client.addGame("Tennis67", 6);
+		Client.addGame("Swimming67", 2);
 
 		Game game1 = new Game();
-		game1.setName("Tennis6");
+		game1.setName("Tennis67");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
-		game2.setName("Swimming6");
+		game2.setName("Swimming67");
 		game2.setNumPlayer(2);
 
 		Game[] gameArr = { game1, game2 };
@@ -261,7 +266,7 @@ public class ClientTest {
 		Client.addPlayer("Justin", gameArr);
 		Client.addPlayer("Willy", gameArr);
 		String response = Client.generateGameWiseReport("").toString();
-		String expected = "Invalid game name!";
+		String expected = gameNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -319,7 +324,7 @@ public class ClientTest {
 		Client.addPlayer("Julian", gameArr);
 		Client.addPlayer("Mix", gameArr);
 		String response = Client.generatePlayerWiseReport("").toString();
-		String expected = "Invalid player name!";
+		String expected = playerNameInvalid;
 		assertEquals(expected, response);
 	}
 
@@ -346,14 +351,14 @@ public class ClientTest {
 
 	@Test
 	public void getDayReportNoDay() {
-		Client.addGame("Tennis10", 6);
-		Client.addGame("Swimming10", 2);
+		Client.addGame("Tennis100", 6);
+		Client.addGame("Swimming100", 2);
 
 		Game game1 = new Game();
-		game1.setName("Tennis10");
+		game1.setName("Tennis100");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
-		game2.setName("Swimming10");
+		game2.setName("Swimming100");
 		game2.setNumPlayer(2);
 
 		Game[] gameArr = { game1, game2 };
@@ -382,7 +387,7 @@ public class ClientTest {
 		Client.addPlayer("Rachel", gameArr);
 		Client.addPlayer("Bud", gameArr);
 		String response = Client.generateDayWiseReport("").toString();
-		String expected = "Invalid day name!";
+		String expected = dayNameInvalid;
 		assertEquals(expected, response);
 	}
 
