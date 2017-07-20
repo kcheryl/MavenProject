@@ -10,6 +10,9 @@ public class Client {
 		service = new SchedulerServiceImp(gameRepo, playerRepo, dayRepo);
 	}
 
+	private Client() {
+	}
+
 	public static String addGame(String name, int numPlayers) {
 		return service.createGame(new Game(name, numPlayers));
 	}
