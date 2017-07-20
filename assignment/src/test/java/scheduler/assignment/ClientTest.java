@@ -1,4 +1,5 @@
 package scheduler.assignment;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -43,7 +44,18 @@ public class ClientTest {
 	@Test
 	public void addPlayer() {
 		Client.addGame("Tennis", 2);
-		Game[] gameArr = { new Game("Tennis", 5), new Game("Football", 2), new Game("Badminton", 3) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Football");
+		game2.setNumPlayer(2);
+		Game game3 = new Game();
+		game3.setName("Badminton");
+		game3.setNumPlayer(3);
+
+		Game[] gameArr = { game1, game2, game3 };
 		String response = Client.addPlayer("Peter", gameArr);
 		String expected = "Player saved successfully!";
 		assertEquals(expected, response);
@@ -51,7 +63,17 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerNoGame() {
-		Game[] gameArr = { new Game("Soccer", 5), new Game("Football", 2), new Game("Badminton", 3) };
+		Game game1 = new Game();
+		game1.setName("Socceer");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Football");
+		game2.setNumPlayer(2);
+		Game game3 = new Game();
+		game3.setName("Badminton");
+		game3.setNumPlayer(3);
+
+		Game[] gameArr = { game1, game2, game3 };
 		String response = Client.addPlayer("Rob", gameArr);
 		String expected = "Player is invalid!";
 		assertEquals(expected, response);
@@ -59,8 +81,15 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerNoName() {
+		Game game1 = new Game();
+		game1.setName("Basketball");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Tennis");
+		game2.setNumPlayer(2);
+
 		Client.addGame("Tennis", 2);
-		Game[] gameArr = { new Game("Basketball", 5), new Game("Tennis", 2) };
+		Game[] gameArr = { game1, game2 };
 		String response = Client.addPlayer("", gameArr);
 		String expected = "Invalid player name!";
 		assertEquals(expected, response);
@@ -68,8 +97,12 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerDuplicate() {
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(7);
+
 		Client.addGame("Tennis", 6);
-		Game[] gameArr = { new Game("Tennis", 7) };
+		Game[] gameArr = { game1 };
 		Client.addPlayer("Jane", gameArr);
 		String response = Client.addPlayer("Jane", gameArr);
 		String expected = "Player is already created!";
@@ -79,7 +112,15 @@ public class ClientTest {
 	@Test
 	public void addPlayerNullName() {
 		Client.addGame("Tennis", 6);
-		Game[] gameArr = { new Game("Tennis", 5), new Game("Swimming", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		String response = Client.addPlayer(null, gameArr);
 		String expected = "Invalid player name!";
 		assertEquals(expected, response);
@@ -89,7 +130,15 @@ public class ClientTest {
 	public void addDay() {
 		Client.addGame("Tennis", 4);
 		Client.addGame("Rowing", 2);
-		Game[] gameArr = { new Game("Tennis", 2), new Game("Rowing", 4) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(2);
+		Game game2 = new Game();
+		game2.setName("Rowing");
+		game2.setNumPlayer(4);
+
+		Game[] gameArr = { game1, game2 };
 		String response = Client.addDay("Day1", gameArr);
 		String expected = "Day saved successfully!";
 		assertEquals(expected, response);
@@ -97,7 +146,14 @@ public class ClientTest {
 
 	@Test
 	public void addDayNoGames() {
-		Game[] gameArr = { new Game("Tennis2", 2), new Game("Rowing2", 4) };
+		Game game1 = new Game();
+		game1.setName("Tennis2");
+		game1.setNumPlayer(2);
+		Game game2 = new Game();
+		game2.setName("Rowing2");
+		game2.setNumPlayer(4);
+
+		Game[] gameArr = { game1, game2 };
 		String response = Client.addDay("Day2", gameArr);
 		String expected = "Day is invalid!";
 		assertEquals(expected, response);
@@ -105,7 +161,10 @@ public class ClientTest {
 
 	@Test
 	public void addDayNoName() {
-		Game[] gameArr = { new Game("Tennis", 2) };
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(2);
+		Game[] gameArr = { game1 };
 		String response = Client.addDay("", gameArr);
 		String expected = "Invalid day name!";
 		assertEquals(expected, response);
@@ -114,7 +173,12 @@ public class ClientTest {
 	@Test
 	public void addDayDuplicate() {
 		Client.addGame("Tennis", 5);
-		Game[] gameArr = { new Game("Tennis", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(2);
+
+		Game[] gameArr = { game1 };
 		Client.addDay("Day", gameArr);
 		String response = Client.addDay("Day1", gameArr);
 		String expected = "Day is already created!";
@@ -124,7 +188,15 @@ public class ClientTest {
 	@Test
 	public void addDayNullName() {
 		Client.addGame("Tennis", 6);
-		Game[] gameArr = { new Game("Tennis", 5), new Game("Swimming", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		String response = Client.addDay(null, gameArr);
 		String expected = "Invalid day name!";
 		assertEquals(expected, response);
@@ -134,7 +206,15 @@ public class ClientTest {
 	public void getGameReport() {
 		Client.addGame("Tennis5", 6);
 		Client.addGame("Swimming5", 2);
-		Game[] gameArr = { new Game("Tennis5", 5), new Game("Swimming5", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis5");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming5");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day5", gameArr);
 		Client.addPlayer("Tom", gameArr);
 		Client.addPlayer("Mary", gameArr);
@@ -147,7 +227,15 @@ public class ClientTest {
 	public void getGameReportNoGame() {
 		Client.addGame("Tennis6", 6);
 		Client.addGame("Swimming6", 2);
-		Game[] gameArr = { new Game("Tennis6", 5), new Game("Swimming6", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis6");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming6");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day6", gameArr);
 		Client.addPlayer("Justin", gameArr);
 		Client.addPlayer("Willy", gameArr);
@@ -160,7 +248,15 @@ public class ClientTest {
 	public void getGameReportEmptyGame() {
 		Client.addGame("Tennis6", 6);
 		Client.addGame("Swimming6", 2);
-		Game[] gameArr = { new Game("Tennis6", 5), new Game("Swimming6", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis6");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming6");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day6", gameArr);
 		Client.addPlayer("Justin", gameArr);
 		Client.addPlayer("Willy", gameArr);
@@ -173,7 +269,15 @@ public class ClientTest {
 	public void getPlayerReport() {
 		Client.addGame("Tennis8", 6);
 		Client.addGame("Swimming8", 2);
-		Game[] gameArr = { new Game("Tennis8", 5), new Game("Swimming8", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis8");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming8");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day8", gameArr);
 		Client.addPlayer("Justine", gameArr);
 		Client.addPlayer("Wil", gameArr);
@@ -184,7 +288,14 @@ public class ClientTest {
 
 	@Test
 	public void getPlayerReportNoPlayer() {
-		Game[] gameArr = { new Game("Tennis7", 5), new Game("Swimming7", 2) };
+		Game game1 = new Game();
+		game1.setName("Tennis7");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming7");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day7", gameArr);
 		Client.addPlayer("Julian", gameArr);
 		Client.addPlayer("Mix", gameArr);
@@ -196,7 +307,14 @@ public class ClientTest {
 
 	@Test
 	public void getPlayerReportEmptyPlayer() {
-		Game[] gameArr = { new Game("Tennis7", 5), new Game("Swimming7", 2) };
+		Game game1 = new Game();
+		game1.setName("Tennis7");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming7");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day7", gameArr);
 		Client.addPlayer("Julian", gameArr);
 		Client.addPlayer("Mix", gameArr);
@@ -209,7 +327,15 @@ public class ClientTest {
 	public void getDayReport() {
 		Client.addGame("Tennis9", 6);
 		Client.addGame("Swimming9", 2);
-		Game[] gameArr = { new Game("Tennis9", 5), new Game("Swimming9", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis9");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming9");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day9", gameArr);
 		Client.addPlayer("Tim", gameArr);
 		Client.addPlayer("Martha", gameArr);
@@ -222,7 +348,15 @@ public class ClientTest {
 	public void getDayReportNoDay() {
 		Client.addGame("Tennis10", 6);
 		Client.addGame("Swimming10", 2);
-		Game[] gameArr = { new Game("Tennis10", 5), new Game("Swimming10", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis10");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming10");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day10", gameArr);
 		Client.addPlayer("Rachel", gameArr);
 		Client.addPlayer("Bud", gameArr);
@@ -235,7 +369,15 @@ public class ClientTest {
 	public void getDayReportEmptyDay() {
 		Client.addGame("Tennis10", 6);
 		Client.addGame("Swimming10", 2);
-		Game[] gameArr = { new Game("Tennis10", 5), new Game("Swimming10", 2) };
+
+		Game game1 = new Game();
+		game1.setName("Tennis10");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Swimming10");
+		game2.setNumPlayer(2);
+
+		Game[] gameArr = { game1, game2 };
 		Client.addDay("Day10", gameArr);
 		Client.addPlayer("Rachel", gameArr);
 		Client.addPlayer("Bud", gameArr);

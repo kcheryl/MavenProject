@@ -14,15 +14,24 @@ public class Client {
 	}
 
 	public static String addGame(String name, int numPlayers) {
-		return service.createGame(new Game(name, numPlayers));
+		Game newGame = new Game();
+		newGame.setName(name);
+		newGame.setNumPlayer(numPlayers);
+		return service.createGame(newGame);
 	}
 
 	public static String addPlayer(String name, Game[] games) {
-		return service.createPlayer(new Player(name, games));
+		Player newPlayer = new Player();
+		newPlayer.setName(name);
+		newPlayer.setGame(games);
+		return service.createPlayer(newPlayer);
 	}
 
 	public static String addDay(String name, Game[] games) {
-		return service.createDay(new Day(name, games));
+		Day newDay = new Day();
+		newDay.setName(name);
+		newDay.setGame(games);
+		return service.createDay(newDay);
 	}
 
 	public static StringBuffer generateGameWiseReport(String gameName) {

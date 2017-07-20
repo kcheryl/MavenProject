@@ -4,11 +4,6 @@ public class Game {
 	private String name;
 	private int numPlayer;
 
-	Game(String name, int numPlayer) {
-		this.name = name;
-		this.numPlayer = numPlayer;
-	}
-
 	public String getName() {
 		return this.name;
 	}
