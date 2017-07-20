@@ -180,7 +180,7 @@ public class ClientTest {
 		Client.addPlayer("Justine", gameArr);
 		Client.addPlayer("Wil", gameArr);
 		String response = Client.generatePlayerWiseReport("Justine").toString();
-		String expected = "Player Wise Report for Justine\n* Game: Tennis8\nDays: Day8\n* Game: Swimming8\nDays: Day8\n";
+		String expected = "Player Wise Report for Justine\n* Game: Tennis16\nDays: Day8\n* Game: Swimming16\nDays: Day8\n";
 		assertEquals(expected, response);
 	}
 
