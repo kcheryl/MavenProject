@@ -46,10 +46,10 @@ public class ClientTest {
 
 	@Test
 	public void addPlayer() {
-		Client.addGame("Tennis", 2);
+		Client.addGame("Tennis32", 2);
 
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis32");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
 		game2.setName("Football");
@@ -88,10 +88,10 @@ public class ClientTest {
 		game1.setName("Basketball");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
-		game2.setName("Tennis");
+		game2.setName("Tennis35");
 		game2.setNumPlayer(2);
 
-		Client.addGame("Tennis", 2);
+		Client.addGame("Tennis35", 2);
 		Game[] gameArr = { game1, game2 };
 		String response = Client.addPlayer("", gameArr);
 		String expected = playerNameInvalid;
@@ -101,10 +101,10 @@ public class ClientTest {
 	@Test
 	public void addPlayerDuplicate() {
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis46");
 		game1.setNumPlayer(7);
 
-		Client.addGame("Tennis", 6);
+		Client.addGame("Tennis46", 6);
 		Game[] gameArr = { game1 };
 		Client.addPlayer("Jane", gameArr);
 		String response = Client.addPlayer("Jane", gameArr);
@@ -114,10 +114,10 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerNullName() {
-		Client.addGame("Tennis", 6);
+		Client.addGame("Tennis54", 6);
 
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis54");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
 		game2.setName("Swimming");
@@ -131,11 +131,11 @@ public class ClientTest {
 
 	@Test
 	public void addDay() {
-		Client.addGame("Tennis", 4);
+		Client.addGame("Tennis22", 4);
 		Client.addGame("Rowing", 2);
 
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis22");
 		game1.setNumPlayer(2);
 		Game game2 = new Game();
 		game2.setName("Rowing");
@@ -165,7 +165,7 @@ public class ClientTest {
 	@Test
 	public void addDayNoName() {
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis23");
 		game1.setNumPlayer(2);
 		Game[] gameArr = { game1 };
 		String response = Client.addDay("", gameArr);
@@ -175,10 +175,10 @@ public class ClientTest {
 
 	@Test
 	public void addDayDuplicate() {
-		Client.addGame("Tennis", 5);
+		Client.addGame("Tennis24", 5);
 
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis24");
 		game1.setNumPlayer(2);
 
 		Game[] gameArr = { game1 };
@@ -190,10 +190,10 @@ public class ClientTest {
 
 	@Test
 	public void addDayNullName() {
-		Client.addGame("Tennis", 6);
+		Client.addGame("Tennis25", 6);
 
 		Game game1 = new Game();
-		game1.setName("Tennis");
+		game1.setName("Tennis25");
 		game1.setNumPlayer(5);
 		Game game2 = new Game();
 		game2.setName("Swimming");
