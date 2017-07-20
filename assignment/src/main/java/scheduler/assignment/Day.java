@@ -1,27 +1,32 @@
 package scheduler.assignment;
 
 public class Day {
-	private String name;
-	private Game[] games;
+	private String dayName;
+	private Game[] dayGames;
 
-	public String getName() {
-		return this.name;
+	public Day(String dayName, Game[] dayGames) {
+		this.dayName = dayName;
+		this.dayGames = dayGames;
 	}
 
-	public void setName(String newName) {
-		this.name = newName;
+	public String getName() {
+		return this.dayName;
 	}
 
 	public Game[] getGame() {
-		return games;
+		return dayGames;
+	}
+
+	public void setName(String newName) {
+		this.dayName = newName;
 	}
 
 	public void setGame(Game[] newGames) {
-		this.games = newGames;
+		this.dayGames = newGames;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.dayName;
 	}
 }

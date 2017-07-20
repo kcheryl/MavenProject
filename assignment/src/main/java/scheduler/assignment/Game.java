@@ -4,6 +4,11 @@ public class Game {
 	private String name;
 	private int numPlayer;
 
+	public Game(String name, int numPlayer) {
+		this.name = name;
+		this.numPlayer = numPlayer;
+	}
+
 	public String getName() {
 		return this.name;
 	}
