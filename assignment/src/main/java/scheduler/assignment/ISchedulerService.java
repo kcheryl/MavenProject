@@ -7,9 +7,9 @@ public interface ISchedulerService {
 
 	public String createDay(Day d);
 
-	public StringBuffer gameWiseReport(String gameName);
+	public StringBuilder gameWiseReport(String gameName);
 
-	public StringBuffer playerWiseReport(String playerName);
+	public StringBuilder playerWiseReport(String playerName);
 
-	public StringBuffer dayWiseReport(String dayName);
+	public StringBuilder dayWiseReport(String dayName);
 }

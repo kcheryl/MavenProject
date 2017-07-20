@@ -139,8 +139,8 @@ public class SchedulerServiceImp implements ISchedulerService {
 		return null;
 	}
 
-	public StringBuffer gameWiseReport(String gameName) {
-		StringBuffer sb = new StringBuffer();
+	public StringBuilder gameWiseReport(String gameName) {
+		StringBuilder sb = new StringBuilder();
 
 		if (gameName == null || !gameName.matches(".*[a-z].*")) {
 			sb.append("Invalid game name!");
@@ -192,8 +192,8 @@ public class SchedulerServiceImp implements ISchedulerService {
 		return sb;
 	}
 
-	public StringBuffer playerWiseReport(String playerName) {
-		StringBuffer sb = new StringBuffer();
+	public StringBuilder playerWiseReport(String playerName) {
+		StringBuilder sb = new StringBuilder();
 
 		if (playerName == null || !playerName.matches(".*[a-z].*")) {
 			sb.append("Invalid player name!");
@@ -238,8 +238,8 @@ public class SchedulerServiceImp implements ISchedulerService {
 		return sb;
 	}
 
-	public StringBuffer dayWiseReport(String dayName) {
-		StringBuffer sb = new StringBuffer();
+	public StringBuilder dayWiseReport(String dayName) {
+		StringBuilder sb = new StringBuilder();
 
 		if (dayName == null || !dayName.matches(".*[a-z].*")) {
 			sb.append("Invalid day name!");

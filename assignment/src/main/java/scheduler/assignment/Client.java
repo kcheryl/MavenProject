@@ -10,9 +10,6 @@ public class Client {
 		service = new SchedulerServiceImp(gameRepo, playerRepo, dayRepo);
 	}
 
-	public static void main(String[] args) {
-	}
-
 	public static String addGame(String name, int numPlayers) {
 		Game newGame = new Game();
 		newGame.setName(name);
@@ -34,15 +31,15 @@ public class Client {
 		return service.createDay(newDay);
 	}
 
-	public static StringBuffer generateGameWiseReport(String gameName) {
+	public static StringBuilder generateGameWiseReport(String gameName) {
 		return service.gameWiseReport(gameName);
 	}
 
-	public static StringBuffer generatePlayerWiseReport(String playerName) {
+	public static StringBuilder generatePlayerWiseReport(String playerName) {
 		return service.playerWiseReport(playerName);
 	}
 
-	public static StringBuffer generateDayWiseReport(String dayName) {
+	public static StringBuilder generateDayWiseReport(String dayName) {
 		return service.dayWiseReport(dayName);
 	}
 }
