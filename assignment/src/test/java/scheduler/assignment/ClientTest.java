@@ -8,6 +8,21 @@ public class ClientTest {
 	String playerNameInvalid = "Invalid player name!";
 	String dayNameInvalid = "Invalid day name!";
 
+	public Game[] gameErrorTemplate() {
+		Game game1 = new Game();
+		game1.setName("Socceer");
+		game1.setNumPlayer(5);
+		Game game2 = new Game();
+		game2.setName("Football");
+		game2.setNumPlayer(2);
+		Game game3 = new Game();
+		game3.setName("Badminton");
+		game3.setNumPlayer(3);
+
+		Game[] gameArr = { game1, game2, game3 };
+		return gameArr;
+	}
+
 	@Test
 	public void addGame() {
 		String response = Client.addGame("Bowling", 2);
@@ -66,17 +81,7 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerNoGame() {
-		Game game1 = new Game();
-		game1.setName("Socceer");
-		game1.setNumPlayer(5);
-		Game game2 = new Game();
-		game2.setName("Football");
-		game2.setNumPlayer(2);
-		Game game3 = new Game();
-		game3.setName("Badminton");
-		game3.setNumPlayer(3);
-
-		Game[] gameArr = { game1, game2, game3 };
+		Game[] gameArr = gameErrorTemplate();
 		String response = Client.addPlayer("Rob", gameArr);
 		String expected = "Player is invalid!";
 		assertEquals(expected, response);
@@ -84,15 +89,9 @@ public class ClientTest {
 
 	@Test
 	public void addPlayerNoName() {
-		Game game1 = new Game();
-		game1.setName("Basketball");
-		game1.setNumPlayer(5);
-		Game game2 = new Game();
-		game2.setName("Tennis35");
-		game2.setNumPlayer(2);
 
 		Client.addGame("Tennis35", 2);
-		Game[] gameArr = { game1, game2 };
+		Game[] gameArr = gameErrorTemplate();
 		String response = Client.addPlayer("", gameArr);
 		String expected = playerNameInvalid;
 		assertEquals(expected, response);
@@ -115,15 +114,7 @@ public class ClientTest {
 	@Test
 	public void addPlayerNullName() {
 		Client.addGame("Tennis54", 6);
-
-		Game game1 = new Game();
-		game1.setName("Tennis54");
-		game1.setNumPlayer(5);
-		Game game2 = new Game();
-		game2.setName("Swimming");
-		game2.setNumPlayer(2);
-
-		Game[] gameArr = { game1, game2 };
+		Game[] gameArr = gameErrorTemplate();
 		String response = Client.addPlayer(null, gameArr);
 		String expected = playerNameInvalid;
 		assertEquals(expected, response);
