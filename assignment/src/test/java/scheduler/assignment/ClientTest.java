@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ClientTest {
-
+	// add test cases
 	@Test
 	@SuppressWarnings("all")
 	public void addGame() {
@@ -14,6 +14,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void addGameNoName() {
 		String response = Client.addGame("", 2);
 		String expected = "Invalid game name!";
@@ -134,6 +135,16 @@ public class ClientTest {
 		assertEquals(expected, response);
 	}
 
+	// report test cases
+	public void reportTemplateInvalidCases() {
+		Client.addGame("Tennis14", 6);
+		Client.addGame("Swimming14", 2);
+		Game[] gameArr = { new Game("Tennis14", 5), new Game("Swimming14", 2) };
+		Client.addDay("Day6", gameArr);
+		Client.addPlayer("Justin", gameArr);
+		Client.addPlayer("Willy", gameArr);
+	}
+
 	@Test
 	@SuppressWarnings("all")
 	public void getGameReport() {
@@ -151,12 +162,7 @@ public class ClientTest {
 	@Test
 	@SuppressWarnings("all")
 	public void getGameReportNoGame() {
-		Client.addGame("Tennis14", 6);
-		Client.addGame("Swimming14", 2);
-		Game[] gameArr = { new Game("Tennis14", 5), new Game("Swimming14", 2) };
-		Client.addDay("Day6", gameArr);
-		Client.addPlayer("Justin", gameArr);
-		Client.addPlayer("Willy", gameArr);
+		reportTemplateInvalidCases();
 		String response = Client.generateGameWiseReport("Baseball").toString();
 		String expected = "No records available for Baseball\n";
 		assertEquals(expected, response);
@@ -165,12 +171,7 @@ public class ClientTest {
 	@Test
 	@SuppressWarnings("all")
 	public void getGameReportEmptyGame() {
-		Client.addGame("Tennis15", 6);
-		Client.addGame("Swimming15", 2);
-		Game[] gameArr = { new Game("Tennis15", 5), new Game("Swimming15", 2) };
-		Client.addDay("Day6", gameArr);
-		Client.addPlayer("Justin", gameArr);
-		Client.addPlayer("Willy", gameArr);
+		reportTemplateInvalidCases();
 		String response = Client.generateGameWiseReport("").toString();
 		String expected = "Invalid game name!";
 		assertEquals(expected, response);
@@ -197,7 +198,6 @@ public class ClientTest {
 		Client.addPlayer("Mix", gameArr);
 		String response = Client.generatePlayerWiseReport("Peach").toString();
 		String expected = "No records available for Peach\n";
-
 		assertEquals(expected, response);
 	}
 
@@ -229,12 +229,7 @@ public class ClientTest {
 	@Test
 	@SuppressWarnings("all")
 	public void getDayReportNoDay() {
-		Client.addGame("Tennis20", 6);
-		Client.addGame("Swimming20", 2);
-		Game[] gameArr = { new Game("Tennis20", 5), new Game("Swimming20", 2) };
-		Client.addDay("Day10", gameArr);
-		Client.addPlayer("Rachel", gameArr);
-		Client.addPlayer("Bud", gameArr);
+		reportTemplateInvalidCases();
 		String response = Client.generateDayWiseReport("Day111").toString();
 		String expected = "No records available for Day111\n";
 		assertEquals(expected, response);
@@ -243,12 +238,7 @@ public class ClientTest {
 	@Test
 	@SuppressWarnings("all")
 	public void getDayReportEmptyDay() {
-		Client.addGame("Tennis21", 6);
-		Client.addGame("Swimming21", 2);
-		Game[] gameArr = { new Game("Tennis21", 5), new Game("Swimming21", 2) };
-		Client.addDay("Day10", gameArr);
-		Client.addPlayer("Rachel", gameArr);
-		Client.addPlayer("Bud", gameArr);
+		reportTemplateInvalidCases();
 		String response = Client.generateDayWiseReport("").toString();
 		String expected = "Invalid day name!";
 		assertEquals(expected, response);
