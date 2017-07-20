@@ -60,6 +60,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void addPlayerNoName() {
 		Client.addGame("Tennis5", 2);
 		Game[] gameArr = { new Game("Basketball5", 5), new Game("Tennis5", 2) };
@@ -106,6 +107,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void addDayNoName() {
 		Game[] gameArr = { new Game("Tennis10", 2) };
 		String response = Client.addDay("", gameArr);
@@ -133,6 +135,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getGameReport() {
 		Client.addGame("Tennis13", 6);
 		Client.addGame("Swimming13", 2);
@@ -146,6 +149,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getGameReportNoGame() {
 		Client.addGame("Tennis14", 6);
 		Client.addGame("Swimming14", 2);
@@ -159,6 +163,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getGameReportEmptyGame() {
 		Client.addGame("Tennis15", 6);
 		Client.addGame("Swimming15", 2);
@@ -208,6 +213,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getDayReport() {
 		Client.addGame("Tennis19", 6);
 		Client.addGame("Swimming19", 2);
@@ -221,6 +227,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getDayReportNoDay() {
 		Client.addGame("Tennis20", 6);
 		Client.addGame("Swimming20", 2);
@@ -234,6 +241,7 @@ public class ClientTest {
 	}
 
 	@Test
+	@SuppressWarnings("all")
 	public void getDayReportEmptyDay() {
 		Client.addGame("Tennis21", 6);
 		Client.addGame("Swimming21", 2);
