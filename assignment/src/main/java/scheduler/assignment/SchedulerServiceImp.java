@@ -1,6 +1,10 @@
 package scheduler.assignment;
 
 public class SchedulerServiceImp implements ISchedulerService {
+	private static final String REGEX_MIN_ONE_CHAR = ".*[a-z].*";
+	private static final String INVALID_PLAYERS = "Invalid number of players!";
+	private static final String NO_RECORDS = "No records available for ";
+
 	IGameRepo gameRepo;
 	IPlayerRepo playerRepo;
 	IDayRepo dayRepo;
@@ -37,11 +41,11 @@ public class SchedulerServiceImp implements ISchedulerService {
 	public String checkGame(Game g) {
 		String name = g.getName();
 		int numPlayers = g.getNumPlayer();
-		if (name == null || !name.matches(".*[a-z].*")) {
+		if (name == null || !name.matches(REGEX_MIN_ONE_CHAR)) {
 			return "Invalid game name!";
 		}
 		if (numPlayers < 1) {
-			return "Invalid number of players!";
+			return INVALID_PLAYERS;
 		}
 		return null;
 	}
@@ -53,35 +57,33 @@ public class SchedulerServiceImp implements ISchedulerService {
 		}
 
 		Player player = playerRepo.findOne(p.getName());
-		// if player does not exist
-		if (player == null) {
-			// check if player is valid (at least 1 game is part of the system)
-			if (p.getGame().length > 0) {
-				for (Game game : p.getGame()) {
-					Game temp = gameRepo.findOne(game.getName());
-					// if game exist
-					if (temp != null) { // if game exist
-						// player is valid
-						return playerRepo.save(p);
-					}
-				}
-			}
-			return "Player is invalid!";
-		}
 		// if player already exist
-		else {
+		if (player != null) {
 			return "Player is already created!";
 		}
+
+		// check if player is valid (at least 1 game is part of the system)
+		if (p.getGame().length > 0) {
+			for (Game game : p.getGame()) {
+				Game temp = gameRepo.findOne(game.getName());
+				// if game exist
+				if (temp != null) {
+					// player is valid
+					return playerRepo.save(p);
+				}
+			}
+		}
+		return "Player is invalid!";
 	}
 
 	public String checkPlayer(Player p) {
 		String name = p.getName();
 		Game[] games = p.getGame();
-		if (name == null || !name.matches(".*[a-z].*")) {
+		if (name == null || !name.matches(REGEX_MIN_ONE_CHAR)) {
 			return "Invalid player name!";
 		}
 		if (games.length < 1) {
-			return "Invalid number of players!";
+			return INVALID_PLAYERS;
 		}
 		for (Game game : games) {
 			// check if game in games are valid
@@ -100,34 +102,32 @@ public class SchedulerServiceImp implements ISchedulerService {
 		}
 
 		Day day = dayRepo.findOne(d.getName());
-		// if day does not exist
-		if (day == null) {
-			// check if day is valid (all games are part of the system)
-			if (d.getGame().length > 0) {
-				for (Game game : d.getGame()) {
-					Game temp = gameRepo.findOne(game.getName());
-					// if day do not exist
-					if (temp == null) {
-						return "Day is invalid!";
-					}
-				}
-			}
-			return dayRepo.save(d);
-		}
 		// if day already exist
-		else {
+		if (day != null) {
 			return "Day is already created!";
 		}
+
+		// check if day is valid (all games are part of the system)
+		if (d.getGame().length > 0) {
+			for (Game game : d.getGame()) {
+				Game temp = gameRepo.findOne(game.getName());
+				// if day do not exist
+				if (temp == null) {
+					return "Day is invalid!";
+				}
+			}
+		}
+		return dayRepo.save(d);
 	}
 
 	public String checkDay(Day d) {
 		String day = d.getName();
 		Game[] games = d.getGame();
-		if (day == null || !day.matches(".*[a-z].*")) {
+		if (day == null || !day.matches(REGEX_MIN_ONE_CHAR)) {
 			return "Invalid day name!";
 		}
 		if (games.length < 1) {
-			return "Invalid number of players!";
+			return INVALID_PLAYERS;
 		}
 		for (Game game : games) {
 			// check if game in games are valid
@@ -142,7 +142,8 @@ public class SchedulerServiceImp implements ISchedulerService {
 	public StringBuilder gameWiseReport(String gameName) {
 		StringBuilder sb = new StringBuilder();
 
-		if (gameName == null || !gameName.matches(".*[a-z].*")) {
+		// input string check
+		if (gameName == null || !gameName.matches(REGEX_MIN_ONE_CHAR)) {
 			sb.append("Invalid game name!");
 			return sb;
 		}
@@ -150,10 +151,19 @@ public class SchedulerServiceImp implements ISchedulerService {
 		Game g = gameRepo.findOne(gameName);
 		// if game does not exist
 		if (g == null) {
-			sb.append("No records available for " + gameName + "\n");
+			sb.append(NO_RECORDS + gameName + "\n");
 			return sb;
 		}
+
 		sb.append("Game Wise Report for " + gameName + "\n");
+		sb.append(generateGameReportDays(g));
+		sb.append(generateGameReportPlayers(g));
+
+		return sb;
+	}
+
+	public StringBuilder generateGameReportDays(Game g) {
+		StringBuilder sb = new StringBuilder();
 
 		// get all days from DayRepoImp
 		Day[] days = dayRepo.findAll();
@@ -173,6 +183,12 @@ public class SchedulerServiceImp implements ISchedulerService {
 			}
 		}
 		sb.append("\n");
+		return sb;
+	}
+
+	public StringBuilder generateGameReportPlayers(Game g) {
+		StringBuilder sb = new StringBuilder();
+
 		// get all players from PlayerRepoImp
 		Player[] players = playerRepo.findAll();
 		sb.append("Players: ");
@@ -195,7 +211,8 @@ public class SchedulerServiceImp implements ISchedulerService {
 	public StringBuilder playerWiseReport(String playerName) {
 		StringBuilder sb = new StringBuilder();
 
-		if (playerName == null || !playerName.matches(".*[a-z].*")) {
+		// input string check
+		if (playerName == null || !playerName.matches(REGEX_MIN_ONE_CHAR)) {
 			sb.append("Invalid player name!");
 			return sb;
 		}
@@ -203,9 +220,10 @@ public class SchedulerServiceImp implements ISchedulerService {
 		Player p = playerRepo.findOne(playerName);
 		// if player does not exist
 		if (p == null) {
-			sb.append("No records available for " + playerName + "\n");
+			sb.append(NO_RECORDS + playerName + "\n");
 			return sb;
 		}
+
 		sb.append("Player Wise Report for " + playerName + "\n");
 		// get all games from Player
 		Game[] games = p.getGame();
@@ -215,25 +233,31 @@ public class SchedulerServiceImp implements ISchedulerService {
 				continue;
 			}
 			sb.append("* Game: " + game.getName() + "\n");
-			// get all days from DayRepoImp
-			Day[] days = dayRepo.findAll();
-			sb.append("Days:");
-			for (Day day : days) {
-				if (day == null) {
-					continue;
-				}
-				// check games from individual days
-				Game[] dayGames = day.getGame();
-				for (Game dayGame : dayGames) {
-					// if the games (individual players) is same as the day game
-					if (dayGame.getName().equals(game.getName())) {
-						sb.append(" " + day.getName());
-						break;
-					}
+			sb.append(generatePlayerReportDays(game));
+			sb.append("\n");
+		}
+		return sb;
+	}
 
+	public StringBuilder generatePlayerReportDays(Game game) {
+		StringBuilder sb = new StringBuilder();
+
+		// get all days from DayRepoImp
+		Day[] days = dayRepo.findAll();
+		sb.append("Days:");
+		for (Day day : days) {
+			if (day == null) {
+				continue;
+			}
+			// check games from individual days
+			Game[] dayGames = day.getGame();
+			for (Game dayGame : dayGames) {
+				// if the games (individual players) is same as the day game
+				if (dayGame.getName().equals(game.getName())) {
+					sb.append(" " + day.getName());
+					break;
 				}
 			}
-			sb.append("\n");
 		}
 		return sb;
 	}
@@ -241,7 +265,7 @@ public class SchedulerServiceImp implements ISchedulerService {
 	public StringBuilder dayWiseReport(String dayName) {
 		StringBuilder sb = new StringBuilder();
 
-		if (dayName == null || !dayName.matches(".*[a-z].*")) {
+		if (dayName == null || !dayName.matches(REGEX_MIN_ONE_CHAR)) {
 			sb.append("Invalid day name!");
 			return sb;
 		}
@@ -249,7 +273,7 @@ public class SchedulerServiceImp implements ISchedulerService {
 		Day d = dayRepo.findOne(dayName);
 		// if day does not exist
 		if (d == null) {
-			sb.append("No records available for " + dayName + "\n");
+			sb.append(NO_RECORDS + dayName + "\n");
 			return sb;
 		}
 		sb.append("Day Wise Report for " + dayName + "\n");
@@ -261,25 +285,31 @@ public class SchedulerServiceImp implements ISchedulerService {
 				continue;
 			}
 			sb.append("* Game: " + game.getName() + "\n");
-			// get all players from PlayerRepoImp
-			sb.append("Players:");
-			Player[] players = playerRepo.findAll();
-			for (Player player : players) {
-				if (player == null) {
-					continue;
-				}
-				// check games from individual players
-				Game[] playerGames = player.getGame();
-				for (Game playerGame : playerGames) {
-					// if the games (individual players) is same as the day game
-					if (playerGame.getName().equals(game.getName())) {
-						sb.append(" " + player.getName());
-						break;
-					}
+			sb.append(generateDayReportPlayers(game));
+			sb.append("\n");
+		}
+		return sb;
+	}
 
+	public StringBuilder generateDayReportPlayers(Game game) {
+		StringBuilder sb = new StringBuilder();
+
+		// get all players from PlayerRepoImp
+		sb.append("Players:");
+		Player[] players = playerRepo.findAll();
+		for (Player player : players) {
+			if (player == null) {
+				continue;
+			}
+			// check games from individual players
+			Game[] playerGames = player.getGame();
+			for (Game playerGame : playerGames) {
+				// if the games (individual players) is same as the day game
+				if (playerGame.getName().equals(game.getName())) {
+					sb.append(" " + player.getName());
+					break;
 				}
 			}
-			sb.append("\n");
 		}
 		return sb;
 	}
